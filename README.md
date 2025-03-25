@@ -1,25 +1,16 @@
-# Nu primesc notă pentru că nu am pus titlu și descriere
+# The Journey Home
 
-### Folosiți template-ul corespunzător grupei voastre!
+In this game, you play as a dinosaur trying to get back home. Along the way, you come across numerous other dinosaurs—some friendly, some hostile.
+Different dinosaurs have varying levels of aggression. Based on their behavior, you can choose to ignore them, talk to them, or fight them. However, some dinosaurs won’t give you the option to run!
+Carnivores are typically more aggressive than herbivores, but there are exceptions to every rule.
+## Encounters
+When encountering a carnivore with a maximum aggression level of 7, you cannot ignore them, but you can try talking to them. If you make the right choices, they might let you go unharmed!
+When encountering a herbivore with a maximum aggression level of 5, you can choose to ignore them or talk to them. Some might even offer you something to help you on your journey.
+When encountering a herbivore with an aggression level between 5 and 7, you cannot ignore them—you can only talk to them.
+When facing a dinosaur with a minimum aggression level of 8, you have no choice but to fight.
+Make the best choices to ensure you return home in one piece!
 
-| Laborant  | Link template                                |
-|-----------|----------------------------------------------|
-| Dragoș B  | https://github.com/Ionnier/oop-template      |
-| Tiberiu M | https://github.com/MaximTiberiu/oop-template |
-| Marius MC | https://github.com/mcmarius/oop-template     |
 
-### Important!
-
-Aveți voie cu cod generat de modele de limbaj la care nu ați contribuit semnificativ doar în folder-ul `generated`.
-Codul generat pus "ca să fie"/pe care nu îl înțelegeți se punctează doar pentru puncte bonus, doar în contextul
-în care oferă funcționalități ajutătoare și doar dacă are sens.
-
-O cerință nu se consideră îndeplinită dacă este realizată doar prin cod generat.
-
-- **Fără cod de umplutură/fără sens!**
-- **Fără copy-paste!**
-- **Fără variabile globale!**
-- **Fără atribute publice!**
 
 ### Tema 0
 
