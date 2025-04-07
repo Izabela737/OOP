@@ -1,57 +1,204 @@
 #include <iostream>
-#include <array>
+#include <utility>
+#include <vector>
+#include <algorithm>
+#include <random>
+#include <cmath>
 
-#include <Helper.h>
+class Jucator
+{
+    std::string nume;
+    int viata;
+
+public:
+    explicit Jucator(std::string  nume) : nume(std::move(nume)), viata(50){}
+
+    // Constructor de copiere
+    Jucator(const Jucator& other)
+        : nume(other.nume), viata(other.viata) {
+        std::cout << "Copiere Jucator: " << nume << "\n";
+    }
+
+    Jucator& operator=(const Jucator& other) {
+        if (this != &other) {
+            nume = other.nume;
+            viata = other.viata;
+        }
+        return *this;
+    }
+    [[nodiscard]] bool checkHP() const { return viata > 0; }
+    void takeDamage(const int damage) { viata -= damage; }
+
+    ~Jucator() = default;
+    friend std::ostream& operator<<(std::ostream& os, const Jucator& j) {
+        return os << "Jucator[" << j.nume << "|HP:" << j.viata << "]";
+    }
+};
+
+class Dinozaur {
+    std::string nume;
+    std::string tip;
+    int agresivitate;  // 0-10
+    int viata;
+
+public:
+    friend bool operator==(const Dinozaur& lhs, const Dinozaur& rhs)
+    {
+        return lhs.nume == rhs.nume
+            && lhs.tip == rhs.tip
+            && lhs.agresivitate == rhs.agresivitate
+            && lhs.viata == rhs.viata;
+    }
+
+    friend bool operator!=(const Dinozaur& lhs, const Dinozaur& rhs)
+    {
+        return !(lhs == rhs);
+    }
+
+    Dinozaur(std::string nume, std::string tip, int agresivitate, int viata)
+    : nume(std::move(nume)), tip(std::move(tip)), agresivitate(agresivitate), viata(viata) {}
+    [[nodiscard]] const std::string& getNume() const { return nume; }
+    [[nodiscard]] const std::string& getTip() const { return tip; }
+    [[nodiscard]] int getAgresivitate() const { return agresivitate; }
+    [[nodiscard]] int getViata() const { return viata; }
+
+    ~Dinozaur()=default;
+
+    void afiseaza() const;
+    friend std::ostream& operator<<(std::ostream& os, const Dinozaur& d) {
+        return os << "Dinozaur " << d.nume << " | Tip: " << d.tip << " | HP: "
+                 << d.viata << " | Agresivitate: " << d.agresivitate <<std::endl;
+    }
+    [[nodiscard]] bool checkHP() const
+    {
+        if (viata > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+    void takeDamage(const int damage) { viata -= damage; }
+};
+
+class Arena {
+    const std::vector<Dinozaur>& dinozauri;
+    Jucator& jucator;
+
+    [[nodiscard]] static bool atacRateaza(int sansa) {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dist(0, 99);
+        return dist(gen) < sansa;
+    }
+
+    static void atacSlab(Dinozaur& dino) {
+        if (atacRateaza(20)) {
+            std::cout << "Atacul jucatorului a dat gres!\n";
+        } else {
+            dino.takeDamage(5);
+            std::cout << "Jucatorul a lovit dinozaurul!\n";
+        }
+    }
+
+    static void atacPuternic(Dinozaur& dino) {
+        if (atacRateaza(70)) {
+            std::cout << "Atacul jucatorului a dat gres!\n";
+        } else {
+            dino.takeDamage(25);
+            std::cout << "Jucatorul a lovit dinozaurul!\n";
+        }
+    }
+
+public:
+    Arena(const std::vector<Dinozaur>& dino, Jucator& juc)
+        : dinozauri(dino), jucator(juc) {}
+
+    static void startLupta(const std::vector<Dinozaur>& dinozauri, Jucator& jucator, const int indice) {
+        Dinozaur dino = dinozauri[indice];
+        std::cout << "Lupta a inceput cu: " << dino << "\n";
+        int alegere;
+
+        while (jucator.checkHP() && dino.checkHP()) {
+            std::cout << "\nJucatorul ataca!\n";
+
+            std::cout << "1. Atac slab\n2. Atac puternic\nAlege: ";
+            std::cin >> alegere;
+
+            if (alegere == 1) atacSlab(dino);
+            else atacPuternic(dino);
+
+            if (!dino.checkHP()) {
+                std::cout << "Dinozaurul a fost invins!\n";
+                break;
+            }
+
+            std::cout << "\nDinozaurul ataca!\n";
+
+            if (atacRateaza(25)) {
+                std::cout << "Atacul dinozaurului a dat gres!\n";
+            } else {
+                jucator.takeDamage(static_cast<int>(std::round(1.5 * dino.getAgresivitate())));
+                std::cout << "Dinozaurul a lovit jucatorul!\n";
+            }
+
+            if (!jucator.checkHP()) {
+                std::cout << "Jucatorul a fost invins! Game Over.\n";
+                break;
+            }
+        }
+    }
+};
+
+class Game {
+    const std::vector<Dinozaur>& dinozauri;
+    Jucator& jucator;
+public:
+    Game(const std::vector<Dinozaur>& dinozauri, Jucator& jucator)
+        : dinozauri(dinozauri),
+          jucator(jucator) {}
+    void run() const
+    {
+        for (const Dinozaur& dino : dinozauri)
+        {
+            if (!jucator.checkHP())
+            {
+                std::cout << "Jucatorul nu mai are viata!\n";
+                break;
+            }
+            std::cout << "\nTe-ai intalnit cu: " << dino.getNume() << "\n";
+        }
+    }
+};
 
 int main() {
-    std::cout << "Hello, world!\n";
-    std::array<int, 100> v{};
-    int nr;
-    std::cout << "Introduceți nr: ";
-    /////////////////////////////////////////////////////////////////////////
-    /// Observație: dacă aveți nevoie să citiți date de intrare de la tastatură,
-    /// dați exemple de date de intrare folosind fișierul tastatura.txt
-    /// Trebuie să aveți în fișierul tastatura.txt suficiente date de intrare
-    /// (în formatul impus de voi) astfel încât execuția programului să se încheie.
-    /// De asemenea, trebuie să adăugați în acest fișier date de intrare
-    /// pentru cât mai multe ramuri de execuție.
-    /// Dorim să facem acest lucru pentru a automatiza testarea codului, fără să
-    /// mai pierdem timp de fiecare dată să introducem de la zero aceleași date de intrare.
-    ///
-    /// Pe GitHub Actions (bife), fișierul tastatura.txt este folosit
-    /// pentru a simula date introduse de la tastatură.
-    /// Bifele verifică dacă programul are erori de compilare, erori de memorie și memory leaks.
-    ///
-    /// Dacă nu puneți în tastatura.txt suficiente date de intrare, îmi rezerv dreptul să vă
-    /// testez codul cu ce date de intrare am chef și să nu pun notă dacă găsesc vreun bug.
-    /// Impun această cerință ca să învățați să faceți un demo și să arătați părțile din
-    /// program care merg (și să le evitați pe cele care nu merg).
-    ///
-    /////////////////////////////////////////////////////////////////////////
-    std::cin >> nr;
-    /////////////////////////////////////////////////////////////////////////
-    for(int i = 0; i < nr; ++i) {
-        std::cout << "v[" << i << "] = ";
-        std::cin >> v[i];
+    std::vector<Dinozaur> dinozauri = {
+        {"T-Rex", "Carnivor", 10, 70}, {"Velociraptor", "Carnivor", 8, 50},
+        {"Triceratops", "Ierbivor", 6, 50}, {"Stegosaurus", "Ierbivor", 5, 50},
+        {"Spinosaurus", "Carnivor", 9, 50}, {"Brachiosaurus", "Ierbivor", 3, 50},
+        {"Allosaurus", "Carnivor", 7, 50}, {"Pteranodon", "Carnivor", 6, 50},
+        {"Ankylosaurus", "Ierbivor", 4, 50}, {"Dilophosaurus", "Carnivor", 7, 50},
+        {"Iguanodon", "Ierbivor", 5, 50}, {"Compsognathus", "Carnivor", 3, 30},
+        {"Parasaurolophus", "Ierbivor", 4, 30}, {"Carnotaurus", "Carnivor", 8, 50},
+        {"Therizinosaurus", "Omnivor", 6, 50}
+    };
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::ranges::shuffle(dinozauri.begin(), dinozauri.end(), gen);
+
+    // Select primii 7 dinozauri
+    const std::vector<Dinozaur> selectie(dinozauri.begin(), dinozauri.begin() + 7);
+
+    // Afis dinozaurii
+    std::cout << "Dinozaurii selectati sunt:\n";
+    for (const auto& dino : selectie) {
+       std::cout << dino;
     }
-    std::cout << "\n\n";
-    std::cout << "Am citit de la tastatură " << nr << " elemente:\n";
-    for(int i = 0; i < nr; ++i) {
-        std::cout << "- " << v[i] << "\n";
-    }
-    ///////////////////////////////////////////////////////////////////////////
-    /// Pentru date citite din fișier, NU folosiți tastatura.txt. Creați-vă voi
-    /// alt fișier propriu cu ce alt nume doriți.
-    /// Exemplu:
-    /// std::ifstream fis("date.txt");
-    /// for(int i = 0; i < nr2; ++i)
-    ///     fis >> v2[i];
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    ///                Exemplu de utilizare cod generat                     ///
-    ///////////////////////////////////////////////////////////////////////////
-    Helper helper;
-    helper.help();
-    ///////////////////////////////////////////////////////////////////////////
+    Jucator jucator("Erou");
+
+
+    const Game joc(selectie, jucator);
+    joc.run();
+
     return 0;
 }
