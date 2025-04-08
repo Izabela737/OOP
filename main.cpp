@@ -18,6 +18,7 @@ public:
         : nume(other.nume), viata(other.viata) {
         std::cout << "Copiere Jucator: " << nume << "\n";
     }
+    [[nodiscard]] int getViata() const { return viata; }
 
     Jucator& operator=(const Jucator& other) {
         if (this != &other) {
@@ -101,24 +102,29 @@ class Arena {
     }
 
     static void atacPuternic(Dinozaur& dino) {
-        if (atacRateaza(70)) {
+        if (atacRateaza(65)) {
             std::cout << "Atacul jucatorului a dat gres!\n";
         } else {
             dino.takeDamage(25);
             std::cout << "Jucatorul a lovit dinozaurul!\n";
         }
     }
+    static void AfisHP(const Dinozaur& dino, const Jucator& jucator)
+    {
+        std::cout <<"Dino HP: " << dino.getViata() << std::endl;
+        std::cout << "Jucator HP: " << jucator.getViata() << std::endl;
+    }
 
 public:
     Arena(const std::vector<Dinozaur>& dino, Jucator& juc)
         : dinozauri(dino), jucator(juc) {}
 
-    static void startLupta(const std::vector<Dinozaur>& dinozauri, Jucator& jucator, const int indice) {
-        Dinozaur dino = dinozauri[indice];
+    static void startLupta(Dinozaur& dino, Jucator& jucator) {
         std::cout << "Lupta a inceput cu: " << dino << "\n";
         int alegere;
 
         while (jucator.checkHP() && dino.checkHP()) {
+            AfisHP(dino, jucator);
             std::cout << "\nJucatorul ataca!\n";
 
             std::cout << "1. Atac slab\n2. Atac puternic\nAlege: ";
@@ -139,10 +145,11 @@ public:
             } else {
                 jucator.takeDamage(static_cast<int>(std::round(1.5 * dino.getAgresivitate())));
                 std::cout << "Dinozaurul a lovit jucatorul!\n";
+
             }
 
             if (!jucator.checkHP()) {
-                std::cout << "Jucatorul a fost invins! Game Over.\n";
+                std::cout << "Jucatorul a fost invins!\n";
                 break;
             }
         }
@@ -158,7 +165,7 @@ public:
           jucator(jucator) {}
     void run() const
     {
-        for (const Dinozaur& dino : dinozauri)
+        for (Dinozaur dino : dinozauri)
         {
             if (!jucator.checkHP())
             {
@@ -166,6 +173,37 @@ public:
                 break;
             }
             std::cout << "\nTe-ai intalnit cu: " << dino.getNume() << "\n";
+            if (dino.getAgresivitate() >=8)
+            {
+                Arena::startLupta(dino,jucator);
+            }
+            else
+            {
+                std::cout << "Dialog cu dinozaurul:\n";
+                if (dino.getAgresivitate() <=5)
+                {
+                    if (dino.getTip()=="Ierbivor")
+                    {
+                        std::cout << "alege de ignori sau sa vb(poti primii viata)\n";
+                    }
+                    else
+                    {
+                        std::cout << "vb sau te bati\n";
+                    }
+
+                }
+                else if (dino.getAgresivitate() <=7 and dino.getAgresivitate() >5)
+                {
+                    if (dino.getTip()=="Carnivor")
+                    {
+                        std::cout << "vb si daca alegi ok nu te lupti(mai greu de evitat)\n";
+                    }
+                    else
+                    {
+                        std::cout<<"vb si daca alegi ok";
+                    }
+                }
+            }
         }
     }
 };
@@ -179,7 +217,7 @@ int main() {
         {"Ankylosaurus", "Ierbivor", 4, 50}, {"Dilophosaurus", "Carnivor", 7, 50},
         {"Iguanodon", "Ierbivor", 5, 50}, {"Compsognathus", "Carnivor", 3, 30},
         {"Parasaurolophus", "Ierbivor", 4, 30}, {"Carnotaurus", "Carnivor", 8, 50},
-        {"Therizinosaurus", "Omnivor", 6, 50}
+        {"Therizinosaurus", "Carnivor", 6, 50}
     };
 
     std::random_device rd;
@@ -197,7 +235,7 @@ int main() {
     Jucator jucator("Erou");
 
 
-    const Game joc(selectie, jucator);
+    Game joc(selectie, jucator);
     joc.run();
 
     return 0;
