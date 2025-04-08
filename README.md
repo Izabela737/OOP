@@ -5,8 +5,11 @@ Different dinosaurs have varying levels of aggression. Based on their behavior, 
 Carnivores are typically more aggressive than herbivores, but there are exceptions to every rule.
 ## Encounters
 -When encountering a carnivore with a maximum aggression level of 7, you cannot ignore them, but you can try talking to them. If you make the right choices, they might let you go unharmed!
+
 -When encountering a herbivore with a maximum aggression level of 5, you can choose to ignore them or talk to them. Some might even offer you something to help you on your journey.
+
 -When encountering a herbivore with an aggression level between 5 and 7, you cannot ignore them—you can only talk to them.
+
 -When facing a dinosaur with a minimum aggression level of 8, you have no choice but to fight.
 
   Make the best choices to ensure you return home in one piece!

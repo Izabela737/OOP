@@ -65,25 +65,19 @@ public:
 
     ~Dinozaur()=default;
 
-    void afiseaza() const;
     friend std::ostream& operator<<(std::ostream& os, const Dinozaur& d) {
         return os << "Dinozaur " << d.nume << " | Tip: " << d.tip << " | HP: "
                  << d.viata << " | Agresivitate: " << d.agresivitate <<std::endl;
     }
     [[nodiscard]] bool checkHP() const
     {
-        if (viata > 0)
-        {
-            return true;
-        }
-        return false;
+        return viata > 0;
     }
     void takeDamage(const int damage) { viata -= damage; }
 };
 
 class Arena {
-    const std::vector<Dinozaur>& dinozauri;
-    Jucator& jucator;
+
 
     [[nodiscard]] static bool atacRateaza(int sansa) {
         std::random_device rd;
@@ -116,8 +110,7 @@ class Arena {
     }
 
 public:
-    Arena(const std::vector<Dinozaur>& dino, Jucator& juc)
-        : dinozauri(dino), jucator(juc) {}
+
 
     static void startLupta(Dinozaur& dino, Jucator& jucator) {
         std::cout << "Lupta a inceput cu: " << dino << "\n";
@@ -157,15 +150,13 @@ public:
 };
 
 class Game {
-    const std::vector<Dinozaur>& dinozauri;
-    Jucator& jucator;
+
 public:
-    Game(const std::vector<Dinozaur>& dinozauri, Jucator& jucator)
-        : dinozauri(dinozauri),
-          jucator(jucator) {}
-    void run() const
+    Game ()=default;
+
+    static void run(std::vector<Dinozaur>& dinozauri, Jucator& jucator)
     {
-        for (Dinozaur dino : dinozauri)
+        for (auto& dino : dinozauri)
         {
             if (!jucator.checkHP())
             {
@@ -185,6 +176,7 @@ public:
                     if (dino.getTip()=="Ierbivor")
                     {
                         std::cout << "alege de ignori sau sa vb(poti primii viata)\n";
+                        std::cout << "ori +15hp ori dupa fiecare atac reusit +3" << std::endl;
                     }
                     else
                     {
@@ -192,7 +184,7 @@ public:
                     }
 
                 }
-                else if (dino.getAgresivitate() <=7 and dino.getAgresivitate() >5)
+                else
                 {
                     if (dino.getTip()=="Carnivor")
                     {
@@ -225,18 +217,16 @@ int main() {
     std::ranges::shuffle(dinozauri.begin(), dinozauri.end(), gen);
 
     // Select primii 7 dinozauri
-    const std::vector<Dinozaur> selectie(dinozauri.begin(), dinozauri.begin() + 7);
+    std::vector<Dinozaur> selectie(dinozauri.begin(), dinozauri.begin() + 7);
 
     // Afis dinozaurii
     std::cout << "Dinozaurii selectati sunt:\n";
     for (const auto& dino : selectie) {
        std::cout << dino;
     }
-    Jucator jucator("Erou");
+    Jucator jucator("Jucator");
 
-
-    Game joc(selectie, jucator);
-    joc.run();
+    Game::run(selectie,jucator);
 
     return 0;
 }
