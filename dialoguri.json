@@ -1,0 +1,235 @@
+{
+  "ErbivorP": [
+    {
+      "start": "start1",
+      "noduri": [
+        {
+          "id": "start1",
+          "mesaj": "...",
+          "optiuni": [
+            { "text": "Hi! Do you know how I can get to Ceratopolis faster?", "next": "r1" },
+            { "text": "(Ignore)", "next": "end" },
+            { "text": "Hello! Do you know where I can find something to eat?", "next": "r2" }
+          ]
+        },
+        {
+          "id": "r1",
+          "mesaj": "Hello! Of course, to get there faster take the right path.",
+          "optiuni": [
+            { "text": "Okay, thank you!", "next": "end" }
+          ]
+        },
+        {
+          "id": "r2",
+          "mesaj": "I don't know a good place, but I can give you some food.",
+          "optiuni": [
+            {"text": "Thank you! (choose Veloberry)", "next":"viata+15" },
+            {"text": "Thank you! (choose Saurantha)", "next":"viata+10"}
+          ]
+        }
+      ]
+    },
+    {
+      "start": "start2",
+      "noduri": [
+        {
+          "id": "start2",
+          "mesaj": "Hello! Where are you going?",
+          "optiuni": [
+            { "text": "I want to get to Ceratopolis.", "next": "r3" },
+            { "text": "I don't have time to talk.", "next": "end" },
+            { "text": "To Ceratopolis. Can you help me with something?", "next": "r4" }
+          ]
+        },
+        {
+          "id": "r3",
+          "mesaj": "Do you need directions?",
+          "optiuni": [
+            {"text": "Yes please", "next": "r5"},
+            {"text": "No, thank you!", "next": "end"}
+          ]
+        },
+        {
+          "id": "r4",
+          "mesaj": "Sure, with what exactly?",
+          "optiuni": [
+            {"text": "I need some food", "next": "r6"},
+            {"text": "I need a map to get there","next": "r7"}
+          ]
+        },
+        {
+          "id": "r6",
+          "mesaj": "Of course, here you go!",
+          "optiuni": [
+            {"text": "Thank you!","next": "viata+10"}
+          ]
+        },
+        {
+          "id": "r7",
+          "mesaj": "Of course, here you go!",
+          "optiuni": [
+            {"text": "Thank you!","next": "end"}
+          ]
+        }
+      ]
+    }
+  ],
+
+  "CarnivorP": [
+    {
+      "start": "start1",
+      "noduri": [
+        {
+          "id": "start1",
+          "mesaj": "What brings you here?",
+          "optiuni": [
+            { "text": "I was just passing through", "next": "r1" },
+            { "text": "You first!", "next": "fight" },
+            { "text": "I left home a long time ago.....", "next": "rW" }
+          ]
+        },
+        {
+          "id": "r1",
+          "mesaj": "Ok, safe travels then",
+          "optiuni": [
+            {"text": "Thank you!", "next": "end"},
+            {"text": "Yeah, next time mind your own business", "next": "fight"}
+          ]
+        },
+        {
+          "id": "rW",
+          "mesaj": "Ok..just go, you're wasting my time",
+          "optiuni": [
+            {"text": "...","next": "end"}
+          ]
+        }
+      ]
+    },
+    {
+      "start": "start2",
+      "noduri": [
+        {
+          "id": "start2",
+          "mesaj": "Hello! Would you like to buy one of these potions?",
+          "optiuni": [
+            { "text": "No, thank you! I'm in a big hurry", "next": "end" },
+            { "text": "..You don't seem trustworthy", "next": "fight" },
+            {"text": "Sure! Sounds interesting", "next": "buff+6"}
+          ]
+        }
+      ]
+    }
+  ],
+
+  "Erbivor": [
+    {
+      "start": "start1",
+      "noduri": [
+        {
+          "id": "start1",
+          "mesaj": "Hello!",
+          "optiuni": [
+            { "text": "What do you want?", "next": "r1" },
+            { "text": "Sorry, I'm in a hurry", "next": "r2" }
+          ]
+        },
+        {
+          "id": "r1",
+          "mesaj": "I just wanted to be friendly, nothing more",
+          "optiuni": [
+            {"text": "I apologize, I didn't mean to be rude","next": "r2"},
+            {"text": "I don't have time to talk","next": "fight"}
+          ]
+        },
+        {
+          "id": "r2",
+          "mesaj": "No problem, safe travels!",
+          "optiuni": [
+            {"text": "Thank you!","next": "end"}
+          ]
+        }
+      ]
+    },
+    {
+      "start": "start2",
+      "noduri": [
+        {
+          "id": "start2",
+          "mesaj": "How are you, would you like to share these fruits? I picked too many",
+          "optiuni": [
+            { "text": "Of course! Thank you!", "next": "viata+10" },
+            { "text": "No, thank you.", "next": "end" }
+          ]
+        }
+      ]
+    },
+    {
+      "start": "start3",
+      "noduri": [
+        {
+          "id": "start3",
+          "mesaj": "How are you, would you like to share these fruits? I picked too many",
+          "optiuni": [
+            { "text": "Of course! Thank you!", "next": "viata-10" },
+            { "text": "No, thank you.", "next": "end" }
+          ]
+        }
+      ]
+    }
+  ],
+
+  "Carnivor": [
+    {
+      "start": "start1",
+      "noduri": [
+        {
+          "id": "start1",
+          "mesaj": "Hey! You!",
+          "optiuni": [
+            { "text": "(run away)", "next": "viata-25" },
+            { "text": "Hello! I'm not here with bad intentions, I just want to get home.", "next": "r2" },
+            { "text": "What do you want?", "next": "fight" }
+          ]
+        },
+        {
+          "id": "r2",
+          "mesaj": "Where exactly?",
+          "optiuni": [
+            {"text": "To Ceratopolis","next": "r3"},
+            {"text": "I'd rather not say..","next": "fight"}
+          ]
+        },
+        {
+          "id": "r3",
+          "mesaj": "Oh, great! It's quite dangerous around here, be careful!",
+          "optiuni": [
+            {"text": "I will!","next": "end"},
+            {"text": "I'm not afraid of anything!","next": "fight"}
+          ]
+        }
+      ]
+    },
+    {
+      "start": "start2",
+      "noduri": [
+        {
+          "id": "start2",
+          "mesaj": "What are you doing here?!",
+          "optiuni": [
+            { "text": "Just on my way home. I apologize if I disturbed you", "next": "r2" },
+            { "text": "None of your business!", "next": "fight" }
+          ]
+        },
+        {
+          "id": "r2",
+          "mesaj": "Don't let me see you around here again!",
+          "optiuni": [
+            {"text": "Of course","next": "end"},
+            {"text": "Pff..","next": "fight"},
+            {"text": "But what did I do to upset you","next": "fight"}
+          ]
+        }
+      ]
+    }
+  ]
+} 

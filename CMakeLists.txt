@@ -28,6 +28,13 @@ include(FetchContent)
 set(FETCHCONTENT_QUIET OFF)
 set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
 
+FetchContent_Declare(
+        json
+        GIT_REPOSITORY https://github.com/nlohmann/json.git
+        GIT_TAG        v3.11.2
+)
+FetchContent_MakeAvailable(json)
+
 # din cauza SFML
 set(WARNINGS_AS_ERRORS OFF)
 
@@ -59,6 +66,31 @@ endif()
 add_executable(${MAIN_EXECUTABLE_NAME}
     main.cpp
     generated/src/Helper.cpp
+    Header/Jucator.h
+        Header/Dinozaur.h
+        Header/Arena.h
+        Header/Game.h
+        Header/Scene.h
+        Header/MainMenuScene.h
+        Source/Jucator.cpp
+        Source/Dinozaur.cpp
+        Source/Arena.cpp
+        Source/Game.cpp
+        Source/MainMenuScene.cpp
+        Header/GameLogic.h
+        Source/GameLogic.cpp
+        Source/GameScene.cpp
+        Source/NameInputScene.cpp
+        Header/GameScene.h
+        Header/NameInputScene.h
+        Source/Button.cpp
+        Header/Button.h
+        Header/Dialog.h
+        Header/DialogManager.h
+        Source/DialogManager.cpp
+        Header/DialogSession.h
+        Source/DialogSession.cpp
+
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )
@@ -75,7 +107,8 @@ target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE generated/incl
 # target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE ext/<SomeHppLib>/include)
 target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE ${SFML_SOURCE_DIR}/include)
 target_link_directories(${MAIN_EXECUTABLE_NAME} PRIVATE ${SFML_BINARY_DIR}/lib)
-target_link_libraries(${MAIN_EXECUTABLE_NAME} PRIVATE sfml-graphics sfml-window sfml-system Threads::Threads)
+target_link_libraries(${MAIN_EXECUTABLE_NAME} PRIVATE sfml-graphics sfml-window sfml-system  sfml-audio Threads::Threads)
+target_link_libraries(${MAIN_EXECUTABLE_NAME} PRIVATE nlohmann_json::nlohmann_json)
 
 if(APPLE)
 elseif(UNIX)
@@ -104,5 +137,9 @@ endif()
 
 
 copy_files(FILES tastatura.txt COPY_TO_DESTINATION TARGET_NAME ${MAIN_EXECUTABLE_NAME})
+
+copy_files(DIRECTORY imagini sound COPY_TO_DESTINATION TARGET_NAME ${MAIN_EXECUTABLE_NAME})
+copy_files(FILES  dialoguri.json COPY_TO_DESTINATION TARGET_NAME ${MAIN_EXECUTABLE_NAME})
+
 # copy_files(FILES tastatura.txt config.json DIRECTORY images sounds COPY_TO_DESTINATION TARGET_NAME ${MAIN_EXECUTABLE_NAME})
 # copy_files(DIRECTORY images sounds COPY_TO_DESTINATION TARGET_NAME ${MAIN_EXECUTABLE_NAME})
