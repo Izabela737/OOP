@@ -633,7 +633,7 @@ bool GameScene::afiseazaBannerDinozaur(const Dinozaur& dino, sf::RenderWindow& w
     win.draw(text);
     return dino.getAgresivitate() >= 8;
 }
-void GameScene::drawTurnBanner(sf::RenderWindow& window, bool isPlayerTurn1, const Dinozaur* currentDino1, bool isTurnTransition1, sf::Clock& turnDelayClock1) const
+void GameScene::drawTurnBanner(sf::RenderWindow& win, bool isPlayerTurn1, const Dinozaur* currentDino1, bool isTurnTransition1, sf::Clock& turnDelayClock1) const
 {
     std::string turnStr;
     if (isPlayerTurn1) {
@@ -670,7 +670,7 @@ void GameScene::drawTurnBanner(sf::RenderWindow& window, bool isPlayerTurn1, con
     container.setOutlineColor(sf::Color(200, 180, 100, alpha));
     container.setOutlineThickness(2.f);
     container.setPosition(
-        static_cast<float>(window.getSize().x) / 2.f - containerSize.x / 2.f,
+        static_cast<float>(win.getSize().x) / 2.f - containerSize.x / 2.f,
         20.f
     );
     turnText1.setPosition(
@@ -678,8 +678,8 @@ void GameScene::drawTurnBanner(sf::RenderWindow& window, bool isPlayerTurn1, con
         container.getPosition().y + (containerSize.y - textBounds.height) / 2.f - textBounds.top
     );
 
-    window.draw(container);
-    window.draw(turnText1);
+    win.draw(container);
+    win.draw(turnText1);
 }
 void GameScene::genereazaOptiuniDialog() {
     butoaneDialog.clear();
