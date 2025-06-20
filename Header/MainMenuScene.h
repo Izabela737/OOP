@@ -31,7 +31,6 @@ class MainMenuScene : public Scene {
         }
     };
     std::vector<MenuButton> buttons;
-    size_t selectedButtonIndex = 0;
     std::function<void(const std::string&)> startCallback;
 public:
     MainMenuScene(sf::RenderWindow& window, std::function<void(const std::string&)> onStart);

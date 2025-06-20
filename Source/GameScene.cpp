@@ -231,6 +231,7 @@ GameScene::GameScene(GameLogic& logic,sf::RenderWindow& window)
 }
 
 void GameScene::update(float deltaTime, sf::RenderWindow& window) {
+    (void)window;
     timeInScene += deltaTime;
     if (state == GameState::Playing || state == GameState::Fighting) {
         inactivityTime += deltaTime;
