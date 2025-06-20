@@ -1,20 +1,25 @@
-# The Journey Home
+# Nu primesc notă pentru că nu am pus titlu și descriere
 
-In this game, you play as a dinosaur trying to get back home. Along the way, you come across numerous other dinosaurs—some friendly, some hostile.
-Different dinosaurs have varying levels of aggression. Based on their behavior, you can choose to ignore them, talk to them, or fight them. However, some dinosaurs won’t give you the option to run!
-Carnivores are typically more aggressive than herbivores, but there are exceptions to every rule.
-## Encounters
--When encountering a carnivore with a maximum aggression level of 7, you cannot ignore them, but you can try talking to them. If you make the right choices, they might let you go unharmed!
+### Folosiți template-ul corespunzător grupei voastre!
 
--When encountering a herbivore with a maximum aggression level of 5, you can choose to ignore them or talk to them. Some might even offer you something to help you on your journey.
+| Laborant  | Link template                                |
+|-----------|----------------------------------------------|
+| Dragoș B  | https://github.com/Ionnier/oop-template      |
+| Tiberiu M | https://github.com/MaximTiberiu/oop-template |
+| Marius MC | https://github.com/mcmarius/oop-template     |
 
--When encountering a herbivore with an aggression level between 5 and 7, you cannot ignore them—you can only talk to them.
+### Important!
 
--When facing a dinosaur with a minimum aggression level of 8, you have no choice but to fight.
+Aveți voie cu cod generat de modele de limbaj la care nu ați contribuit semnificativ doar în folder-ul `generated`.
+Codul generat pus "ca să fie"/pe care nu îl înțelegeți se punctează doar pentru puncte bonus, doar în contextul
+în care oferă funcționalități ajutătoare și doar dacă are sens.
 
-  Make the best choices to ensure you return home in one piece!
+O cerință nu se consideră îndeplinită dacă este realizată doar prin cod generat.
 
-
+- **Fără cod de umplutură/fără sens!**
+- **Fără copy-paste!**
+- **Fără variabile globale!**
+- **Fără atribute publice!**
 
 ### Tema 0
 
@@ -87,6 +92,24 @@ Proiectul este configurat cu CMake.
 
 Instrucțiuni pentru terminal:
 
+0. Biblioteci necesare pe Linux (presupunem sistem de operare bazat pe Debian)
+```sh
+sudo apt-get update && \
+  sudo apt-get install libxrandr-dev \
+    libxcursor-dev \
+    libudev-dev \
+    libopenal-dev \
+    libflac-dev \
+    libvorbis-dev \
+    libgl1-mesa-dev \
+    libegl1-mesa-dev \
+    libdrm-dev \
+    libgbm-dev \
+    libfreetype6-dev
+```
+
+Dacă lipsesc și alte biblioteci, ștergeți folder-ul de build de la pasul 1 și reconfigurați proiectul după ce ați instalat ce lipsea.
+
 1. Pasul de configurare
 ```sh
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
@@ -125,4 +148,6 @@ conțin fișiere generate și nu ne ajută să le versionăm.
 
 ## Resurse
 
+- [SFML](https://github.com/SFML/SFML/tree/2.6.1) (Zlib)
+  - [OpenAL](https://openal-soft.org/) (LGPL): din cauza licenței, trebuie distribuită ca shared library
 - adăugați trimiteri către resursele externe care v-au ajutat sau pe care le-ați folosit
