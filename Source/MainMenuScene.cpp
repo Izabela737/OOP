@@ -49,9 +49,9 @@ void MainMenuScene::initializeButtons()
     exitButton.action = [this]() {  window.close(); };
     buttons.push_back(exitButton);
 }
-void MainMenuScene::handleEvent( sf::Event& event, sf::RenderWindow& window)
+void MainMenuScene::handleEvent( sf::Event& event, sf::RenderWindow& win)
 {
-    sf::Vector2f mousePos = window.mapPixelToCoords(sf::Vector2i(sf::Mouse::getPosition(window)));
+    sf::Vector2f mousePos = win.mapPixelToCoords(sf::Vector2i(sf::Mouse::getPosition(win)));
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
     {
         for (auto& button : buttons)
@@ -63,16 +63,16 @@ void MainMenuScene::handleEvent( sf::Event& event, sf::RenderWindow& window)
         }
     }
 }
-void MainMenuScene::draw(sf::RenderWindow& window)
+void MainMenuScene::draw(sf::RenderWindow& win)
 {
-    window.draw(backgroundSprite);
-    window.draw(startButtonSprite);
-    window.draw(exitButtonSprite);
+    win.draw(backgroundSprite);
+    win.draw(startButtonSprite);
+    win.draw(exitButtonSprite);
 }
-void MainMenuScene::update(float deltaTime, sf::RenderWindow& window)
+void MainMenuScene::update(float deltaTime, sf::RenderWindow& win)
 {
      timeInScene += deltaTime;
-    (void)window;
+    (void)win;
 }
 void MainMenuScene::checkInactivity(float elapsedTime) {
     static float inactivityTime = 0.f;

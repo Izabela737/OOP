@@ -230,8 +230,8 @@ GameScene::GameScene(GameLogic& logic,sf::RenderWindow& window)
     exitButtonSprite.setPosition(exitX, exitY);
 }
 
-void GameScene::update(float deltaTime, sf::RenderWindow& window) {
-    (void)window;
+void GameScene::update(float deltaTime, sf::RenderWindow& win) {
+    (void)win;
     timeInScene += deltaTime;
     if (state == GameState::Playing || state == GameState::Fighting) {
         inactivityTime += deltaTime;
@@ -292,7 +292,7 @@ void GameScene::update(float deltaTime, sf::RenderWindow& window) {
         }
     }
 }
-void GameScene::handleEvent(sf::Event& event, sf::RenderWindow& window)
+void GameScene::handleEvent(sf::Event& event, sf::RenderWindow& win)
 {
     if (event.type == sf::Event::KeyPressed || event.type == sf::Event::MouseButtonPressed) {
         inactivityTime = 0.f;
@@ -330,14 +330,14 @@ void GameScene::handleEvent(sf::Event& event, sf::RenderWindow& window)
             }
 
             if (btnYes && btnNo) {
-                btnYes->update(window);
-                btnNo->update(window);
+                btnYes->update(win);
+                btnNo->update(win);
 
-                if (btnYes->isClicked(window)) {
-                    window.close();
+                if (btnYes->isClicked(win)) {
+                    win.close();
                 }
 
-                if (btnNo->isClicked(window)) {
+                if (btnNo->isClicked(win)) {
                     isPaused = false;
                     btnYes.reset();
                     btnNo.reset();
@@ -375,7 +375,7 @@ void GameScene::handleEvent(sf::Event& event, sf::RenderWindow& window)
                 }
             }if (state == GameState::Fighting && isPlayerTurn && !isTurnTransition) {
                 if (event.type == sf::Event::MouseButtonPressed) {
-                    auto mousePos = window.mapPixelToCoords({event.mouseButton.x, event.mouseButton.y});
+                    auto mousePos = win.mapPixelToCoords({event.mouseButton.x, event.mouseButton.y});
                     int attackType = 0;
                     if (sprAtacSlab.getGlobalBounds().contains(mousePos)) {
                         attackType = 1;
@@ -389,7 +389,7 @@ void GameScene::handleEvent(sf::Event& event, sf::RenderWindow& window)
                 }
             }
             if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
-                sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+                sf::Vector2f mousePos = win.mapPixelToCoords(sf::Mouse::getPosition(win));
 
                 if (gameLogic.areDialogActiv()) {
                     DialogSession* sesiune = gameLogic.getDialog();
@@ -458,147 +458,147 @@ void GameScene::handleEvent(sf::Event& event, sf::RenderWindow& window)
     }
     else if (state==GameState::GameOver||state==GameState::Victory)
     {
-        sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+        sf::Vector2f mousePos = win.mapPixelToCoords(sf::Mouse::getPosition(win));
         if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
             if (newGameButtonSprite.getGlobalBounds().contains(mousePos)) {
                 gameLogic.resetGame();
                 state=GameState::Waiting;
-            }else if (exitButtonSprite.getGlobalBounds().contains(mousePos)) {  window.close(); }
+            }else if (exitButtonSprite.getGlobalBounds().contains(mousePos)) {  win.close(); }
         }
     }
 }
 
-void GameScene::draw(sf::RenderWindow& window) {
+void GameScene::draw(sf::RenderWindow& win) {
     if (state == GameState::Intro) {
-        window.clear(sf::Color::Black);
-        window.draw(fundalSprite);
-        window.draw(line1);
-        window.draw(line2);
-        window.draw(line3);
-        window.draw(line4);
-        window.draw(line5);
-        window.draw(waitingText);
+        win.clear(sf::Color::Black);
+        win.draw(fundalSprite);
+        win.draw(line1);
+        win.draw(line2);
+        win.draw(line3);
+        win.draw(line4);
+        win.draw(line5);
+        win.draw(waitingText);
     }
     else if (state == GameState::IntroEncounter) {
-        window.clear();
-        window.draw(backgroundSprite);
-        window.draw(playerSprite);
+        win.clear();
+        win.draw(backgroundSprite);
+        win.draw(playerSprite);
         if (currentDino != nullptr) {
             if (currentDino->getTip()=="Carnivor")
             {
-                window.draw(dinoCSprite);
+                win.draw(dinoCSprite);
             }else
             {
-                window.draw(dinoESprite);
+                win.draw(dinoESprite);
             }
             if (currentDino->getAgresivitate() >= 8) {
                 updateHPBar(hpBarPlayerSprite, gameLogic.getJucator().getViata(), Jucator::getMaxHP());
                 updateHPBar(hpBarDinoSprite, currentDino->getViata(), currentDino->getMaxHP());
-                window.draw(hpBarPlayerSprite);
-                window.draw(hpBarDinoSprite);
+                win.draw(hpBarPlayerSprite);
+                win.draw(hpBarDinoSprite);
             }
-            else  drawPlayerHP(window);
-            afiseazaBannerDinozaur(*currentDino, window);
+            else  drawPlayerHP(win);
+            afiseazaBannerDinozaur(*currentDino, win);
         }
     }
     else if (state == GameState::Playing)
     {
-        window.clear();
-        window.draw(backgroundSprite);
-        window.draw(playerSprite);
+        win.clear();
+        win.draw(backgroundSprite);
+        win.draw(playerSprite);
         if (currentDino != nullptr)
         {
             if (currentDino->getTip()=="Carnivor")
             {
-                window.draw(dinoCSprite);
+                win.draw(dinoCSprite);
             }else
             {
-                window.draw(dinoESprite);
+                win.draw(dinoESprite);
             }
         }
-        drawPlayerHP(window);
+        drawPlayerHP(win);
 
     }else if (state==GameState::Fighting)
     {
-        window.clear();
-        window.draw(backgroundSprite);
-        window.draw(playerSprite);
+        win.clear();
+        win.draw(backgroundSprite);
+        win.draw(playerSprite);
         if (currentDino != nullptr)
         {   updateHPBar(hpBarDinoSprite, currentDino->getViata(), currentDino->getMaxHP());
             if (currentDino->getTip()=="Carnivor")
             {
-                window.draw(dinoCSprite);
+                win.draw(dinoCSprite);
             }else
             {
-                window.draw(dinoESprite);
+                win.draw(dinoESprite);
             }
         }
-        window.draw(hpBarPlayerSprite);
-        window.draw(hpBarDinoSprite);
-        drawTurnBanner(window, isPlayerTurn, currentDino, isTurnTransition, turnDelayClock);
+        win.draw(hpBarPlayerSprite);
+        win.draw(hpBarDinoSprite);
+        drawTurnBanner(win, isPlayerTurn, currentDino, isTurnTransition, turnDelayClock);
         if (showHitMiss) {
             hitMissSprite.setPosition(hitMissPosition);
-            window.draw(hitMissSprite);
+            win.draw(hitMissSprite);
         }
-        window.draw(sprAtacSlab);
-        window.draw(sprAtacPuternic);
+        win.draw(sprAtacSlab);
+        win.draw(sprAtacPuternic);
     }
     if (state == GameState::Waiting) {
-        window.clear();
-        window.draw(waitSprite);
+        win.clear();
+        win.draw(waitSprite);
         if (canClick) {
-            window.draw(waitingText);
+            win.draw(waitingText);
         }
     }
     if (state == GameState::GameOver)
     {
-        window.clear();
-        window.draw(endSprite);
-        window.draw(newGameButtonSprite);
-        window.draw(exitButtonSprite);
+        win.clear();
+        win.draw(endSprite);
+        win.draw(newGameButtonSprite);
+        win.draw(exitButtonSprite);
     }
     if (state == GameState::Victory)
     {
-        window.clear();
-        window.draw(vicBackgroundSprite);
-        window.draw(vicSprite);
-        window.draw(newGameButtonSprite);
-        window.draw(exitButtonSprite);
+        win.clear();
+        win.draw(vicBackgroundSprite);
+        win.draw(vicSprite);
+        win.draw(newGameButtonSprite);
+        win.draw(exitButtonSprite);
     }
     if (gameLogic.areDialogActiv()) {
-       drawDialogElements(window);
+       drawDialogElements(win);
     }
     if (isPaused) {
         sf::RectangleShape overlay({800.f, 600.f});
         overlay.setFillColor(sf::Color(0, 0, 0, 150));
-        window.draw(overlay);
+        win.draw(overlay);
 
         sf::RectangleShape pauseWindow({400, 200});
         pauseWindow.setPosition(200, 200);
         pauseWindow.setFillColor(sf::Color(70, 70, 70));
-        window.draw(pauseWindow);
+        win.draw(pauseWindow);
 
         sf::Text pauseText("Sigur vrei sa iesi?", font, 30);
         pauseText.setPosition(220, 220);
-        window.draw(pauseText);
+        win.draw(pauseText);
 
         if (btnYes && btnNo) {
-            btnYes->draw(window);
-            btnNo->draw(window);
+            btnYes->draw(win);
+            btnNo->draw(win);
         }
     }
 }
-bool GameScene::afiseazaBannerDinozaur(const Dinozaur& dino, sf::RenderWindow& window) const
+bool GameScene::afiseazaBannerDinozaur(const Dinozaur& dino, sf::RenderWindow& win) const
 {
     constexpr float bannerHeight = 120.f;
     constexpr float padding = 20.f;
 
-    sf::RectangleShape banner(sf::Vector2f(static_cast<float>(window.getSize().x), bannerHeight));
+    sf::RectangleShape banner(sf::Vector2f(static_cast<float>(win.getSize().x), bannerHeight));
     banner.setFillColor(sf::Color(30, 30, 40, 220));
     banner.setOutlineColor(sf::Color(200, 180, 100));
     banner.setOutlineThickness(2.f);
     banner.setPosition(0.f, 50.f);
-    window.draw(banner);
+    win.draw(banner);
 
     sf::Text titlu;
     titlu.setFont(font);
@@ -611,10 +611,10 @@ bool GameScene::afiseazaBannerDinozaur(const Dinozaur& dino, sf::RenderWindow& w
 
     sf::FloatRect titluBounds = titlu.getLocalBounds();
     titlu.setPosition(
-        static_cast<float>(window.getSize().x) / 2.f - titluBounds.width / 2.f,
+        static_cast<float>(win.getSize().x) / 2.f - titluBounds.width / 2.f,
         banner.getPosition().y + 5.f
     );
-    window.draw(titlu);
+    win.draw(titlu);
 
     sf::Text text;
     text.setFont(font);
@@ -630,40 +630,40 @@ bool GameScene::afiseazaBannerDinozaur(const Dinozaur& dino, sf::RenderWindow& w
         titlu.getPosition().y + titluBounds.height + 5.f
     );
 
-    window.draw(text);
+    win.draw(text);
     return dino.getAgresivitate() >= 8;
 }
-void GameScene::drawTurnBanner(sf::RenderWindow& window, bool isPlayerTurn, const Dinozaur* currentDino, bool isTurnTransition, sf::Clock& turnDelayClock) const
+void GameScene::drawTurnBanner(sf::RenderWindow& window, bool isPlayerTurn1, const Dinozaur* currentDino1, bool isTurnTransition1, sf::Clock& turnDelayClock1) const
 {
     std::string turnStr;
-    if (isPlayerTurn) {
+    if (isPlayerTurn1) {
         turnStr = gameLogic.getJucator().getName() + "'s Turn";
-    } else if (currentDino) {
-        turnStr = currentDino->getNume() + "'s Turn";
+    } else if (currentDino1) {
+        turnStr = currentDino1->getNume() + "'s Turn";
     } else {
         return;
     }
 
-    sf::Text turnText;
-    turnText.setFont(font);
-    turnText.setCharacterSize(24);
-    turnText.setString(turnStr);
-    turnText.setFillColor(sf::Color(200, 180, 100));
+    sf::Text turnText1;
+    turnText1.setFont(font);
+    turnText1.setCharacterSize(24);
+    turnText1.setString(turnStr);
+    turnText1.setFillColor(sf::Color(200, 180, 100));
 
     sf::Uint8 alpha = 255;
-    if (isTurnTransition) {
-        float progress = turnDelayClock.getElapsedTime().asSeconds() / 1.0f;
+    if (isTurnTransition1) {
+        float progress = turnDelayClock1.getElapsedTime().asSeconds() / 1.0f;
         progress = std::min(progress, 1.0f);
         alpha = static_cast<sf::Uint8>(255 * (1.0f - progress));
     }
-    turnText.setFillColor(sf::Color(
-        turnText.getFillColor().r,
-        turnText.getFillColor().g,
-        turnText.getFillColor().b,
+    turnText1.setFillColor(sf::Color(
+        turnText1.getFillColor().r,
+        turnText1.getFillColor().g,
+        turnText1.getFillColor().b,
         alpha
     ));
 
-    sf::FloatRect textBounds = turnText.getLocalBounds();
+    sf::FloatRect textBounds = turnText1.getLocalBounds();
     sf::Vector2f containerSize(textBounds.width + 40.f, textBounds.height + 30.f);
     sf::RectangleShape container(containerSize);
     container.setFillColor(sf::Color(30, 30, 40, alpha));
@@ -673,13 +673,13 @@ void GameScene::drawTurnBanner(sf::RenderWindow& window, bool isPlayerTurn, cons
         static_cast<float>(window.getSize().x) / 2.f - containerSize.x / 2.f,
         20.f
     );
-    turnText.setPosition(
+    turnText1.setPosition(
         container.getPosition().x + (containerSize.x - textBounds.width) / 2.f - textBounds.left,
         container.getPosition().y + (containerSize.y - textBounds.height) / 2.f - textBounds.top
     );
 
     window.draw(container);
-    window.draw(turnText);
+    window.draw(turnText1);
 }
 void GameScene::genereazaOptiuniDialog() {
     butoaneDialog.clear();
@@ -717,7 +717,7 @@ void GameScene::genereazaOptiuniDialog() {
         texteOptiuni.push_back(text);
     }
 }
-void GameScene::drawDialogElements(sf::RenderWindow& window) {
+void GameScene::drawDialogElements(sf::RenderWindow& win) {
 
     if (DialogSession* sesiune = gameLogic.getDialog()) {
         mesajDialog.setString(sesiune->getMesaj());
@@ -727,10 +727,10 @@ void GameScene::drawDialogElements(sf::RenderWindow& window) {
     constexpr float padding = 20.f;
 
     sf::RectangleShape dialogBackground;
-    dialogBackground.setSize(sf::Vector2f(static_cast<float>(window.getSize().x), dialogHeight));
-    dialogBackground.setPosition(0.f, static_cast<float>(window.getSize().y) - dialogHeight);
+    dialogBackground.setSize(sf::Vector2f(static_cast<float>(win.getSize().x), dialogHeight));
+    dialogBackground.setPosition(0.f, static_cast<float>(win.getSize().y) - dialogHeight);
     dialogBackground.setFillColor(sf::Color(30, 30, 40, 220));
-    window.draw(dialogBackground);
+    win.draw(dialogBackground);
 
     sf::Text numeDinozaur;
     numeDinozaur.setFont(font);
@@ -739,38 +739,38 @@ void GameScene::drawDialogElements(sf::RenderWindow& window) {
     numeDinozaur.setFillColor(sf::Color(255, 215, 0));
     sf::FloatRect numeBounds = numeDinozaur.getLocalBounds();
     numeDinozaur.setPosition(
-        static_cast<float>(window.getSize().x) / 2.f - numeBounds.width / 2.f,
-        static_cast<float>(window.getSize().y) - dialogHeight + padding
+        static_cast<float>(win.getSize().x) / 2.f - numeBounds.width / 2.f,
+        static_cast<float>(win.getSize().y) - dialogHeight + padding
     );
-    window.draw(numeDinozaur);
+    win.draw(numeDinozaur);
 
     mesajDialog.setFont(font);
     mesajDialog.setCharacterSize(20);
     mesajDialog.setFillColor(sf::Color::White);
     sf::FloatRect msgBounds = mesajDialog.getLocalBounds();
     mesajDialog.setPosition(
-        static_cast<float>(window.getSize().x) / 2.f - msgBounds.width / 2.f,
+        static_cast<float>(win.getSize().x) / 2.f - msgBounds.width / 2.f,
         numeDinozaur.getPosition().y + numeDinozaur.getLocalBounds().height + 10.f
     );
 
     sf::Text shadowText = mesajDialog;
     shadowText.setFillColor(sf::Color(0, 0, 0, 150));
     shadowText.move(2, 2);
-    window.draw(shadowText);
-    window.draw(mesajDialog);
+    win.draw(shadowText);
+    win.draw(mesajDialog);
 
     for (size_t i = 0; i < butoaneDialog.size(); ++i) {
 
-        if (butoaneDialog[i].getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window)))) {
+        if (butoaneDialog[i].getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(win)))) {
             butoaneDialog[i].setFillColor(sf::Color(70, 70, 90, 200));
         } else {
             butoaneDialog[i].setFillColor(sf::Color(50, 50, 70, 200));
         }
-        window.draw(butoaneDialog[i]);
-        window.draw(texteOptiuni[i]);
+        win.draw(butoaneDialog[i]);
+        win.draw(texteOptiuni[i]);
     }
 }
-void GameScene::drawPlayerHP(sf::RenderWindow& window) const
+void GameScene::drawPlayerHP(sf::RenderWindow& win) const
 {
     const auto& player = gameLogic.getJucator();
     int hp = player.getViata();
@@ -794,9 +794,9 @@ void GameScene::drawPlayerHP(sf::RenderWindow& window) const
     background.setOutlineColor(sf::Color(200, 180, 100));
     background.setOutlineThickness(1.f);
 
-    window.draw(background);
-    window.draw(hpIcon);
-    window.draw(hpText);
+    win.draw(background);
+    win.draw(hpIcon);
+    win.draw(hpText);
 }
 void GameScene::updateHPBar(sf::Sprite& sprite, int currentHP, int maxHP) const
 {
