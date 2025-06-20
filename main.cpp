@@ -1,8 +1,4 @@
 #include "./Header/Game.h"
-#include <filesystem>
-#include <iostream>
-#include <fstream>
-
 int main() {
 
    Game game;
