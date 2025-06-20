@@ -1,15 +1,19 @@
 #include "../Header/Jucator.h"
+#include <iostream>
 
 Jucator::Jucator(const Jucator& other) : nume(other.nume), viata(other.viata) {
     std::cout << "Copiere Jucator: " << nume << "\n";
 }
 
 int Jucator::getViata() const { return viata; }
-std::string Jucator::getName() {return nume;}
+const std::string& Jucator::getName() const {
+    return nume;
+}
 Jucator& Jucator::operator=(const Jucator& other) {
     if (this != &other) {
         nume = other.nume;
         viata = other.viata;
+        dmg = other.dmg;
     }
     return *this;
 }

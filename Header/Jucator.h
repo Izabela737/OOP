@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include <iostream>
 #include <utility>
 
 class Jucator {
@@ -11,7 +10,7 @@ class Jucator {
 public:
     explicit Jucator(std::string  nume) : nume(std::move(nume)), viata(100) {}
     Jucator(const Jucator& other);
-    std::string getName();
+    const std::string& getName() const;
     [[nodiscard]] int getViata() const;
     Jucator& operator=(const Jucator& other);
     [[nodiscard]] bool checkHP() const;

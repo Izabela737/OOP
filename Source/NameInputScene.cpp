@@ -123,7 +123,7 @@ void NameInputScene::draw(sf::RenderWindow& window)
         window.draw(warningBackground);
         window.draw(WSprite);
         window.draw(warningText);
-    }else  ;
+    }
 }
 void NameInputScene::checkInactivity(const float elapsedTime)
 {
