@@ -45,7 +45,7 @@ jobs:
     # concurrency:
     #   group: "Cppcheck"
     runs-on: ubuntu-22.04
-    timeout-minutes: 5
+    timeout-minutes: 15 #aici am schimbat din 5
     env:
       # check https://github.com/danmar/cppcheck/releases for latest version
       # NOTE: consider updating this value in scripts/build_cppcheck.sh:4 when changing this value
