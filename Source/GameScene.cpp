@@ -413,15 +413,15 @@ void GameScene::handleEvent(sf::Event& event, sf::RenderWindow& win)
                                 updateHPBar(hpBarDinoSprite, currentDino->getViata(), currentDino->getMaxHP());
                                 return;
                             }
-                            if (next.find("viata+") == 0) {
-                                int val = std::stoi(next.substr(6));
+                            if (next.starts_with("viata+")) {
+                                const int val = std::stoi(next.substr(6));
                                 gameLogic.getJucator().primViata(val);
                                 updateHPBar(hpBarPlayerSprite, gameLogic.getJucator().getViata(),Jucator::getMaxHP());
                                 gameLogic.inchideDialog();
                                 return;
                             }
-                            if (next.find("viata-") == 0) {
-                                int val = std::stoi(next.substr(6));
+                            if (next.starts_with("viata-")) {
+                                const int val = std::stoi(next.substr(6));
                                 gameLogic.getJucator().takeDamage(val);
                                 if (!gameLogic.getJucator().checkHP())
                                 {
@@ -432,8 +432,8 @@ void GameScene::handleEvent(sf::Event& event, sf::RenderWindow& win)
                                 gameLogic.inchideDialog();
                                 return;
                             }
-                            if (next.find("buff+") == 0) {
-                                int val = std::stoi(next.substr(5));
+                            if (next.starts_with("buff+")) {
+                                const int val = std::stoi(next.substr(5));
                                 gameLogic.getJucator().Buff(val);
                                 gameLogic.inchideDialog();
                                 return;
@@ -719,7 +719,7 @@ void GameScene::genereazaOptiuniDialog() {
 }
 void GameScene::drawDialogElements(sf::RenderWindow& win) {
 
-    if (DialogSession* sesiune = gameLogic.getDialog()) {
+    if (const DialogSession* sesiune = gameLogic.getDialog()) {
         mesajDialog.setString(sesiune->getMesaj());
     }else return;
 

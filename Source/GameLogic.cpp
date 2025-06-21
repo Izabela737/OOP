@@ -39,15 +39,15 @@ void GameLogic::initializeGameData()
     dinozauri.resize(7);
 
 }
-void GameLogic::incarcaDialoguri(const std::string& fisier)
-{
-    std::ifstream f(fisier);
-    if (!f) {
-        std::cerr << "Eroare la deschiderea fisierului de dialog: " << fisier << "\n";
-        return;
-    }
-    f >> dialoguri;
-}
+// void GameLogic::incarcaDialoguri(const std::string& fisier)
+// {
+//     std::ifstream f(fisier);
+//     if (!f) {
+//         std::cerr << "Eroare la deschiderea fisierului de dialog: " << fisier << "\n";
+//         return;
+//     }
+//     f >> dialoguri;
+// }
 
 void GameLogic::handleEncounter(const Dinozaur& dino) {
     if (!jucator.checkHP()) {
@@ -82,14 +82,14 @@ void GameLogic::handleEncounter(const Dinozaur& dino) {
 }
 }
 
-bool GameLogic::victoryCheck() const
-{
-    return indexDinoCurent >= dinozauri.size()+1 && jucator.checkHP();
-}
-
-void GameLogic::updateGame(float deltaTime) {
-    (void)deltaTime;
-}
+// bool GameLogic::victoryCheck() const
+// {
+//     return indexDinoCurent >= dinozauri.size()+1 && jucator.checkHP();
+// }
+//
+// void GameLogic::updateGame(float deltaTime) {
+//     (void)deltaTime;
+// }
 
 bool GameLogic::checkGameOver() const
 {
@@ -99,9 +99,9 @@ Jucator& GameLogic::getJucator() {
     return jucator;
 }
 
-const std::vector<Dinozaur>& GameLogic::getDinozauri() const {
-    return dinozauri;
-}
+// const std::vector<Dinozaur>& GameLogic::getDinozauri() const {
+//     return dinozauri;
+// }
 Dinozaur& GameLogic::getDinoCurent() {
     return dinozauri[indexDinoCurent];
 }

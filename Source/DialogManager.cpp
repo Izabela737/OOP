@@ -27,11 +27,10 @@ void DialogManager::incarcaDinFisier(const std::string& path) {
         }
     }
 }
-
 const ArboreDialog& DialogManager::alegeRandom(const std::string& tip) {
-    auto& lista = dialoguri[tip];
+    const auto& lista = dialoguri[tip];
     static std::random_device rd;
     static std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dist(0, lista.size() - 1);
+    std::uniform_int_distribution<std::size_t> dist(0, lista.size() - 1);
     return lista[dist(gen)];
 }

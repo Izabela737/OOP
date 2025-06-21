@@ -17,17 +17,17 @@ class GameLogic {
 
 public:
     explicit GameLogic(const std::string& numeJucator);
-    static void updateGame(float deltaTime);
+   // static void updateGame(float deltaTime);
     [[nodiscard]] bool checkGameOver() const;
     Jucator& getJucator();
-    [[nodiscard]] const std::vector<Dinozaur>& getDinozauri() const;
+   // [[nodiscard]] const std::vector<Dinozaur>& getDinozauri() const;
     void initializeGameData();
     void handleEncounter(const Dinozaur& dino);
     Dinozaur& getDinoCurent();
     [[nodiscard]] bool isLastDino() const;
     void nextDino();
-    [[nodiscard]] bool victoryCheck() const;
-    void incarcaDialoguri(const std::string& fisier);
+  //  [[nodiscard]] bool victoryCheck() const;
+    //void incarcaDialoguri(const std::string& fisier);
     bool areDialogActiv() const;
     DialogSession* getDialog() const;
     void inchideDialog();

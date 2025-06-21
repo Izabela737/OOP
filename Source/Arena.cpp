@@ -28,9 +28,9 @@ void Arena::startLupta(const Dinozaur& dino) {
     std::cout << "Lupta începe între jucător și " << dino.getNume() << "!\n";
 }
 
-bool Arena::eLuptaInDesfasurare() {
-    return inLupta;
-}
+//bool Arena::eLuptaInDesfasurare() {
+//    return inLupta;
+//}
 
 void Arena::reset() {
     inLupta = false;
